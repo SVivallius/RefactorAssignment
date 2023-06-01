@@ -64,25 +64,25 @@ namespace CalculatorRPN
 
     class DoubleStack
     {
-        private double[] data;
+        private double[] _data;
         public int Depth { get; private set; }
 
         public DoubleStack()
         {
-            data = new double[1000];
+            _data = new double[1000];
             Depth = 0;
         }
 
         public void Push(double value)
         {
-            data[Depth++] = value;
+            _data[Depth++] = value;
         }
 
         public double Pop()
         {
             if (Depth > 0)
             {
-                return data[--Depth];
+                return _data[--Depth];
             }
             else
             {
@@ -95,7 +95,7 @@ namespace CalculatorRPN
         {
             if (Depth > 0)
             {
-                return data[Depth - 1];
+                return _data[Depth - 1];
             }
             else
             {
@@ -110,7 +110,7 @@ namespace CalculatorRPN
             b.Append('[');
             for (int i = Depth - 1; ; i--)
             {
-                b.Append(data[i]);
+                b.Append(_data[i]);
                 if (i == 0)
                     return b.Append(']').ToString();
                 b.Append(", ");
