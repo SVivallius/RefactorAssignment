@@ -1,66 +1,41 @@
-﻿using System;
+﻿using Calculator.Classes;
+using System;
 using System.Text;
 
-namespace CalculatorRPN
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            DoubleStack stack = new DoubleStack();
-            while (true)
-            {
-                if (stack.Depth == 0)
-                {
-                    Console.WriteLine("Commands: q c + - * / number");
-                    Console.WriteLine("[]");
-                }
-                else
-                {
-                    Console.WriteLine(stack.ToString());
-                }
-                string input = Console.ReadLine().Trim();
-                if (input == "") input = " ";
-                char command = input[0];
-                if (Char.IsDigit(command))
-                {
-                    double value = Convert.ToDouble(input);
-                    stack.Push(value);
-                }
-                else if (command == '+')
-                {
-                    stack.Push(stack.Pop() + stack.Pop());
-                }
-                else if (command == '*')
-                {
-                    stack.Push(stack.Pop() * stack.Pop());
-                }
-                else if (command == '-')
-                {
-                    double d = stack.Pop();
-                    stack.Push(stack.Pop() - d);
-                }
-                else if (command == '/')
-                {
-                    double d = stack.Pop();
-                    stack.Push(stack.Pop() / d);
-                }
-                else if (command == 'c')
-                {
-                    stack.Clear();
-                }
-                else if (command == 'q')
-                {
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine("Illegal command, ignored");
-                }
+namespace CalculatorRPN;
 
+class Program
+{
+    static void Main(string[] args)
+    {
+        bool running = true;
+        DoubleStack stack = new DoubleStack();
+
+        while (running)
+        {
+            stack.RenderStack();
+
+            string input = Console.ReadLine().Trim();
+            if (input == "") input = " ";
+            char command = input[0];
+
+            if (Char.IsDigit(command))
+            {
+                double value = Convert.ToDouble(input);
+                stack.StackNumeric(value);
+            }
+            else switch (command)
+            {
+                case '+': stack.Add(); break;
+                case '-': stack.Substract(); break;
+                case '*': stack.Multiply(); break;
+                case '/': stack.Divide(); break;
+                case 'c': stack.ClearStack(); break;
+                case 'q': running = false; break;
+                default: Console.WriteLine("Illegal command, ignored"); break;
             }
         }
     }
-
-    
 }
+
+
