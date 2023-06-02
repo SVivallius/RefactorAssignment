@@ -16,7 +16,7 @@ class Program
             stack.RenderStack();
 
             string input = Console.ReadLine().Trim();
-            if (input == "") input = " ";
+            if (input == "") input = " "; // Prevents null reference in storing the command character.
             char command = input[0];
 
             if (Char.IsDigit(command))
